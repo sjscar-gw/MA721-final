@@ -1,0 +1,134 @@
+	\section{Geodesics and the geodesic equation}
+	\label{sec:geodesic-equation}
+	
+	We can now define geodesics and characterize them as solutions of a second
+	order ODE.
+	
+	\begin{definition}
+		A piecewise $C^\infty$ curve $\gamma\colon[a,b]\to M$ is called a
+		\emph{geodesic} if it is a critical point of the energy functional $E_a^b$
+		among all variations that fix endpoints.
+	\end{definition}
+	
+	Using the first variation formula, we obtain a more geometric description.
+	
+	\begin{theorem}\label{thm:geodesic-iff}
+		A piecewise $C^\infty$ curve $\gamma\colon[a,b]\to M$ is a critical point of
+		$E_a^b$ for fixed endpoints if and only if:
+		\begin{enumerate}[label=(\roman*),leftmargin=*]
+			\item $\gamma$ is in fact $C^\infty$ on $[a,b]$ (so all jumps
+			$\Delta_{t_i}\dot\gamma$ vanish), and
+			\item $\gamma$ satisfies the \emph{geodesic equation}
+			\[
+			\nabla_{\dot\gamma}\dot\gamma(t) = 0
+			\quad \text{for all } t\in[a,b].
+			\]
+		\end{enumerate}
+	\end{theorem}
+	
+	\begin{proof}
+		Assume $\gamma$ is a critical point of $E_a^b$.  Let $\alpha$ be any
+		variation of $\gamma$ fixing endpoints, with variation vector field $V$.  Then
+		by Theorem~\ref{thm:first-variation},
+		\[
+		0
+		= \left.\frac{\dd}{\dd u} E_a^b(\bar\alpha(u))\right\vert_{u=0}
+		= -\int_a^b \ipg{V}{\nabla_{\dot\gamma}\dot\gamma} \dd t
+		- \sum_{i=0}^N \ipg{V(t_i)}{\Delta_{t_i}\dot\gamma}.
+		\]
+		
+		We first show that the jump terms vanish.  Fix an index $i$ and choose a
+		variation $\alpha$ whose variation field $V$ is supported very close to $t_i$,
+		with $V(a)=V(b)=0$ and $V(t_j)=0$ for all $j\ne i$.  (This can be done by
+		building $V$ from a bump function and then integrating to get $\alpha$; see
+		the remark below.)  For such a variation, the integral term can be made
+		arbitrarily small, but the sum over $i$ reduces to the single term
+		$-\ipg{V(t_i)}{\Delta_{t_i}\dot\gamma}$.  Since the whole expression must be
+		zero for all such $V$, we conclude that
+		\[
+		\ipg{V(t_i)}{\Delta_{t_i}\dot\gamma} = 0
+		\]
+		for all $V(t_i)\in T_{\gamma(t_i)}M$.  This forces $\Delta_{t_i}\dot\gamma=0$.
+		
+		Thus $\dot\gamma(t)$ has no jumps and is continuous on $[a,b]$.  Since
+		$\gamma$ is $C^\infty$ on each subinterval and $\dot\gamma$ is continuous at
+		the break points, standard results on ODEs imply that $\gamma$ is in fact
+		$C^\infty$ on all of $[a,b]$.
+		
+		With $\gamma$ now smooth, all $\Delta_{t_i}\dot\gamma=0$, so the first
+		variation formula simplifies to
+		\[
+		\int_a^b \ipg{V}{\nabla_{\dot\gamma}\dot\gamma} \dd t = 0
+		\]
+		for every smooth vector field $V$ along $\gamma$ with $V(a)=V(b)=0$.  By
+		working in local coordinates and applying Lemma~\ref{lem:test-fields}, we see
+		that this forces $\nabla_{\dot\gamma}\dot\gamma(t)=0$ for all $t$.
+		
+		Conversely, suppose $\gamma$ is $C^\infty$ and satisfies
+		$\nabla_{\dot\gamma}\dot\gamma=0$.  Then all jumps vanish, and the integral
+		term in the first variation formula also vanishes for any variation $\alpha$
+		(with fixed endpoints).  Hence $\dd E_a^b(\bar\alpha(u))/\dd u|_{u=0}=0$ for
+		all $\alpha$, so $\gamma$ is a critical point.
+	\end{proof}
+	
+	\begin{remark}
+		To justify the existence of variations with a prescribed variation field $V$,
+		one can proceed as follows.  In local coordinates, define
+		\[
+		\alpha(u,t)
+		= \exp_{\gamma(t)}(uV(t)),
+		\]
+		where $\exp$ is the exponential map associated to $g$.  For small $u$, this is
+		well-defined and yields a smooth map $\alpha$ with $\alpha(0,t)=\gamma(t)$ and
+		variation field $V$.  If we want the endpoints fixed, we arrange $V(a)=V(b)=0$.
+		We will not develop the full theory of the exponential map here; instead, we
+		can work locally and patch together variations using bump functions.
+	\end{remark}
+	
+	In local coordinates, the geodesic equation takes a more explicit form.
+	
+	\begin{proposition}[Geodesic equation in coordinates]
+		Let $(x^1,\dots,x^n)$ be local coordinates on $M$, and let $g_{ij}$ be the
+		components of the metric in these coordinates.  Let $(g^{ij})$ be the inverse
+		matrix.  The Christoffel symbols of the Levi-Civita connection are given by
+		\[
+		\Gamma^k_{ij}
+		= \frac12 \sum_{\ell=1}^n g^{k\ell}
+		\left(
+		\frac{\partial g_{j\ell}}{\partial x^i}
+		+ \frac{\partial g_{i\ell}}{\partial x^j}
+		- \frac{\partial g_{ij}}{\partial x^\ell}
+		\right).
+		\]
+		A smooth curve $\gamma\colon[a,b]\to M$ with coordinate representation
+		$\gamma(t) = (\gamma^1(t),\dots,\gamma^n(t))$ is a geodesic if and only if its
+		components satisfy
+		\[
+		\frac{\dd^2\gamma^k}{\dd t^2}(t)
+		+ \sum_{i,j=1}^n
+		\Gamma^k_{ij}\bigl(\gamma(t)\bigr)
+		\frac{\dd\gamma^i}{\dd t}(t)
+		\frac{\dd\gamma^j}{\dd t}(t)
+		= 0,
+		\qquad k=1,\dots,n.
+		\]
+	\end{proposition}
+	
+	\begin{proof}
+		In local coordinates, the covariant derivative of $\dot\gamma$ along itself is
+		given by
+		\[
+		\nabla_{\dot\gamma}\dot\gamma
+		= \sum_{k=1}^n
+		\left(
+		\frac{\dd^2\gamma^k}{\dd t^2}
+		+ \sum_{i,j=1}^n
+		\Gamma^k_{ij}(\gamma(t))
+		\frac{\dd\gamma^i}{\dd t}
+		\frac{\dd\gamma^j}{\dd t}
+		\right)
+		\frac{\partial}{\partial x^k}\Big\vert_{\gamma(t)}.
+		\]
+		Thus $\nabla_{\dot\gamma}\dot\gamma=0$ if and only if each coordinate
+		component satisfies the claimed ODE.
+	\end{proof}

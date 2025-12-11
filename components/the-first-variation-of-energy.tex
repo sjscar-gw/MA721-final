@@ -1,0 +1,271 @@
+	\section{The first variation of energy}
+	\label{sec:first-variation}
+	
+	We now compute the derivative of the energy functional along a variation.
+	This is the key step in deriving the geodesic equation.
+	
+	\subsection{Left and right derivatives}
+	
+	Because we allow piecewise smooth curves, it is useful to introduce the
+	notation for left and right derivatives at the break points.
+	
+	Let $\gamma\colon[a,b]\to M$ be piecewise $C^\infty$ with partition
+	$a=t_0<\dots<t_N=b$ such that $\gamma$ is $C^\infty$ on each open subinterval
+	$(t_i,t_{i+1})$.
+	
+	\begin{definition}
+		For $1\le i\le N-1$, the \emph{left} and \emph{right} derivatives of $\gamma$
+		at $t_i$ are defined by
+		\[
+		\dot\gamma(t_i^-)
+		= \lim_{t\to t_i^-} \dot\gamma(t),\qquad
+		\dot\gamma(t_i^+)
+		= \lim_{t\to t_i^+} \dot\gamma(t),
+		\]
+		computed in local coordinates.  We define the \emph{jump} at $t_i$ by
+		\[
+		\Delta_{t_i}\dot\gamma
+		= \dot\gamma(t_i^+) - \dot\gamma(t_i^-).
+		\]
+		We also set
+		\[
+		\Delta_{t_0}\dot\gamma = \dot\gamma(t_0^+),\qquad
+		\Delta_{t_N}\dot\gamma = -\dot\gamma(t_N^-).
+		\]
+	\end{definition}
+	
+	If $\gamma$ is $C^\infty$ on the entire interval $[a,b]$, then all jumps
+	$\Delta_{t_i}\dot\gamma$ vanish.
+	
+	\subsection{A key lemma from the calculus of variations}
+	
+	We will repeatedly use the following linear-algebraic lemma.
+	
+	\begin{lemma}\label{lem:test-fields}
+		Let $W\colon[a,b]\to\R^n$ be continuous.  Suppose
+		\[
+		\int_a^b \ip{V(t)}{W(t)} \dd t = 0
+		\]
+		for every smooth $V\colon[a,b]\to\R^n$ with $V(a)=V(b)=0$.  Then
+		$W(t)\equiv 0$ on $[a,b]$.
+	\end{lemma}
+	
+	\begin{proof}
+		Fix $t_0\in(a,b)$ and suppose $W(t_0)\ne 0$.  Let $e_1,\dots,e_n$ be the
+		standard basis of $\R^n$, and write $W(t_0) = \sum_{k=1}^n w_k e_k$.  Then
+		at least one $w_k$ is nonzero; without loss of generality $w_1\ne 0$.
+		
+		By continuity, there exists $\delta>0$ such that
+		$\ip{e_1}{W(t)}$ has the same sign as $w_1$ for all
+		$t\in(t_0-\delta,t_0+\delta)$.  Choose a smooth bump function
+		$\varphi\colon[a,b]\to\R$ such that $\varphi$ is supported in
+		$(t_0-\delta,t_0+\delta)$ and $\varphi(t)\ge 0$ with $\varphi(t_0)>0$.
+		
+		Define $V(t) = \varphi(t)e_1$.  Then $V$ is smooth, $V(a)=V(b)=0$, and
+		\[
+		\int_a^b \ip{V(t)}{W(t)} \dd t
+		= \int_a^b \varphi(t)\ip{e_1}{W(t)} \dd t.
+		\]
+		The integrand is nonnegative and positive near $t_0$, so the integral is
+		strictly positive.  This contradicts the assumption that the integral is
+		always zero.  Hence $W(t)=0$ for all $t$.
+	\end{proof}
+	
+	The same argument works for vector fields along a curve in a manifold if we
+	use a coordinate chart.
+	
+	\subsection{The first variation formula}
+	
+	We now state and prove the first variation formula.  The proof involves a
+	coordinate computation on each subinterval and an integration by parts.
+	
+	\begin{theorem}[First variation of energy, \cite{spivak}]\label{thm:first-variation}
+		Let $(M,g)$ be a Riemannian manifold and
+		$\gamma\colon[a,b]\to M$ a piecewise $C^\infty$ curve with partition
+		$a=t_0<\dots<t_N=b$.  Let $\alpha$ be a variation of $\gamma$ with variation
+		vector field $V$.  Then
+		\begin{align*}
+			\left.\frac{\dd}{\dd u} E_a^b(\bar\alpha(u))\right\vert_{u=0}
+			&= -\int_a^b \ipg{V(t)}{\nabla_{\dot\gamma}\dot\gamma(t)} \dd t \\
+			&\quad - \sum_{i=0}^N
+			\ipg{V(t_i)}{\Delta_{t_i}\dot\gamma}.
+		\end{align*}
+		Here $\nabla$ is the Levi-Civita connection of $g$.
+	\end{theorem}
+	
+	\begin{proof}
+		We first express the energy in local coordinates and then differentiate.
+		
+		Choose a coordinate chart $(U,(x^1,\dots,x^n))$ such that
+		$\gamma([t_i,t_{i+1}])\subset U$.  We may refine the partition if necessary
+		to ensure this.  Write
+		\[
+		\gamma(t) = \bigl(\gamma^1(t),\dots,\gamma^n(t)\bigr)
+		\]
+		and
+		\[
+		\dot\gamma(t)
+		= \sum_{k=1}^n \frac{\dd\gamma^k}{\dd t}(t)
+		\frac{\partial}{\partial x^k}\Big\vert_{\gamma(t)}.
+		\]
+		Let $g_{ij}$ be the components of $g$ in these coordinates.  Then the
+		integrand of the energy on $[t_i,t_{i+1}]$ is
+		\[
+		\frac12\norm{\dot\gamma(t)}_g^2
+		= \frac12\sum_{j,\ell=1}^n
+		g_{j\ell}(\gamma(t))
+		\frac{\dd\gamma^j}{\dd t}(t)
+		\frac{\dd\gamma^\ell}{\dd t}(t).
+		\]
+		Define
+		\[
+		F(x,y)
+		= \frac12 \sum_{j,\ell=1}^n g_{j\ell}(x) y^j y^\ell,
+		\qquad x\in U,\ y\in\R^n.
+		\]
+		Then
+		\[
+		E_a^b(\gamma)
+		= \sum_{i=0}^{N-1}
+		\int_{t_i}^{t_{i+1}}
+		F\bigl(\gamma(t),\dot\gamma(t)\bigr)\,\dd t.
+		\]
+		
+		Now consider a variation $\alpha(u,t)$ with $\alpha(0,t)=\gamma(t)$.  In
+		coordinates, write
+		\[
+		\alpha(u,t) = \bigl(\alpha^1(u,t),\dots,\alpha^n(u,t)\bigr).
+		\]
+		For each fixed $u$, we have a curve $t\mapsto\alpha(u,t)$, and we denote its
+		components by $\alpha^k(u,t)$.  The velocity is
+		\[
+		\frac{\partial\alpha}{\partial t}(u,t)
+		= \sum_{k=1}^n
+		\frac{\partial\alpha^k}{\partial t}(u,t)
+		\frac{\partial}{\partial x^k}\Big\vert_{\alpha(u,t)}.
+		\]
+		
+		Then
+		\[
+		E_a^b(\bar\alpha(u))
+		= \sum_{i=0}^{N-1}
+		\int_{t_i}^{t_{i+1}}
+		F\left(\alpha(u,t),
+		\frac{\partial\alpha}{\partial t}(u,t)\right)\,\dd t.
+		\]
+		Differentiating with respect to $u$ under the integral sign, we get
+		\[
+		\frac{\dd}{\dd u} E_a^b(\bar\alpha(u))
+		= \sum_{i=0}^{N-1}
+		\int_{t_i}^{t_{i+1}}
+		\left[
+		\sum_{k=1}^n
+		\frac{\partial F}{\partial x^k}
+		\frac{\partial\alpha^k}{\partial u}
+		+ \sum_{k=1}^n
+		\frac{\partial F}{\partial y^k}
+		\frac{\partial}{\partial t}
+		\left(\frac{\partial\alpha^k}{\partial u}\right)
+		\right]\dd t.
+		\]
+		Evaluating at $u=0$ and using that $\alpha(0,t)=\gamma(t)$, we find
+		\begin{align*}
+			\left.\frac{\dd}{\dd u} E_a^b(\bar\alpha(u))\right\vert_{u=0}
+			&= \sum_{i=0}^{N-1}
+			\int_{t_i}^{t_{i+1}}
+			\left[
+			\sum_{k=1}^n
+			\left.\frac{\partial F}{\partial x^k}\right\vert_{(\gamma,\dot\gamma)}
+			\frac{\partial\alpha^k}{\partial u}(0,t)
+			\right.\\
+			&\qquad\qquad\left.
+			+ \sum_{k=1}^n
+			\left.\frac{\partial F}{\partial y^k}\right\vert_{(\gamma,\dot\gamma)}
+			\frac{\partial}{\partial t}
+			\left(\frac{\partial\alpha^k}{\partial u}(0,t)\right)
+			\right]\dd t.
+		\end{align*}
+		We integrate the second term by parts on each interval
+		$[t_i,t_{i+1}]$:
+		\begin{align*}
+			\int_{t_i}^{t_{i+1}}
+			\sum_{k=1}^n
+			\frac{\partial F}{\partial y^k}
+			\frac{\partial}{\partial t}
+			\left(\frac{\partial\alpha^k}{\partial u}(0,t)\right)\,\dd t
+			&= \left[
+			\sum_{k=1}^n
+			\frac{\partial F}{\partial y^k}
+			\frac{\partial\alpha^k}{\partial u}(0,t)
+			\right]_{t_i}^{t_{i+1}} \\
+			&\quad - \int_{t_i}^{t_{i+1}}
+			\sum_{k=1}^n
+			\frac{\partial}{\partial t}
+			\left(\frac{\partial F}{\partial y^k}\right)
+			\frac{\partial\alpha^k}{\partial u}(0,t)\,\dd t.
+		\end{align*}
+		
+		Summing over $i$ and combining terms, we obtain
+		\begin{align*}
+			\left.\frac{\dd}{\dd u} E_a^b(\bar\alpha(u))\right\vert_{u=0}
+			&= \sum_{i=0}^{N-1}
+			\int_{t_i}^{t_{i+1}}
+			\sum_{k=1}^n
+			\left(
+			\frac{\partial F}{\partial x^k}
+			- \frac{\partial}{\partial t}
+			\left(\frac{\partial F}{\partial y^k}\right)
+			\right)
+			\frac{\partial\alpha^k}{\partial u}(0,t)\,\dd t \\
+			&\quad + \sum_{i=0}^{N-1}
+			\left[
+			\sum_{k=1}^n
+			\frac{\partial F}{\partial y^k}
+			\frac{\partial\alpha^k}{\partial u}(0,t)
+			\right]_{t_i}^{t_{i+1}}.
+		\end{align*}
+		
+		The last sum telescopes.  Evaluating the boundary terms at the internal points
+		$t_1,\dots,t_{N-1}$ yields expressions involving the left and right
+		derivatives of $\gamma$ at those points.  One checks that this boundary
+		contribution can be written as
+		\[
+		-\sum_{i=0}^N
+		\ipg{V(t_i)}{\Delta_{t_i}\dot\gamma},
+		\]
+		where $V$ is the variation vector field and $\Delta_{t_i}\dot\gamma$ is the
+		jump in the velocity at $t_i$.  We omit some routine algebra; the main point
+		is that the terms at $t_i$ involve differences of the form
+		\[
+		\ipg{V(t_i)}{\dot\gamma(t_i^+)}-
+		\ipg{V(t_i)}{\dot\gamma(t_i^-)}
+		= \ipg{V(t_i)}{\Delta_{t_i}\dot\gamma}.
+		\]
+		
+		The remaining integral gives the Euler--Lagrange part.  A direct
+		computation shows that
+		\[
+		\frac{\partial F}{\partial x^k}
+		- \frac{\partial}{\partial t}
+		\left(\frac{\partial F}{\partial y^k}\right)
+		= -\ipg{
+			\frac{\partial}{\partial x^k}
+		}{
+			\nabla_{\dot\gamma}\dot\gamma
+		},
+		\]
+		where $\nabla$ is the Levi-Civita connection.  Therefore
+		\[
+		\sum_{k=1}^n
+		\left(
+		\frac{\partial F}{\partial x^k}
+		- \frac{\partial}{\partial t}
+		\left(\frac{\partial F}{\partial y^k}\right)
+		\right)
+		\frac{\partial\alpha^k}{\partial u}(0,t)
+		= -\ipg{V(t)}{\nabla_{\dot\gamma}\dot\gamma(t)}.
+		\]
+		Substituting this back into the expression for the derivative completes the
+		proof.
+	\end{proof}
+	

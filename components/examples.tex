@@ -1,0 +1,133 @@
+	\section{Examples}
+	\label{sec:examples}
+	
+	We now compute geodesics explicitly in some important examples, illustrating
+	how the general theory plays out in practice.
+	
+	\subsection{Euclidean space \texorpdfstring{$\R^n$}{Rn}}
+	
+	Consider $M=\R^n$ with the standard Euclidean metric
+	\[
+	g = \sum_{i=1}^n \dd x^i\otimes\dd x^i.
+	\]
+	In the standard coordinates $(x^1,\dots,x^n)$ we have $g_{ij}=\delta_{ij}$.
+	All partial derivatives $\partial g_{ij}/\partial x^k$ are zero, so all
+	Christoffel symbols vanish:
+	\[
+	\Gamma^k_{ij} = 0 \quad\text{for all } i,j,k.
+	\]
+	
+	The geodesic equation therefore reduces to
+	\[
+	\frac{\dd^2\gamma^k}{\dd t^2}
+	= 0,\qquad k=1,\dots,n.
+	\]
+	The general solution is
+	\[
+	\gamma^k(t) = A^k t + B^k,
+	\]
+	so $\gamma$ is an affine map:
+	\[
+	\gamma(t) = At + B
+	\]
+	for some constant vectors $A,B\in\R^n$.  These are precisely straight lines.
+	Thus our abstract definition of geodesics recovers the familiar fact that
+	geodesics in Euclidean space are straight lines with constant velocity.
+	
+	\subsection{The round two-sphere \texorpdfstring{$S^2$}{S2}}
+	
+	Let $M=S^2\subset\R^3$ be the unit sphere with the metric induced by the
+	Euclidean inner product.  To compute the geodesic equation, we introduce
+	spherical coordinates.
+	
+	Write a point on $S^2$ as
+	\[
+	(\cos\theta\cos\varphi,\ \cos\theta\sin\varphi,\ \sin\theta),
+	\]
+	where $\theta\in(-\tfrac{\pi}{2},\tfrac{\pi}{2})$ is latitude and
+	$\varphi\in(0,2\pi)$ is longitude.  In these coordinates, a straightforward
+	computation shows that the induced metric is
+	\[
+	g = \dd\theta^2 + \cos^2\theta\,\dd\varphi^2.
+	\]
+	(If one uses colatitude instead of latitude, one gets
+	$g = \dd\theta^2 + \sin^2\theta\,\dd\varphi^2$; both descriptions are
+	equivalent up to a coordinate change.)
+	
+	For definiteness, let us take
+	\[
+	g_{\theta\theta}=1,\qquad
+	g_{\varphi\varphi}=\sin^2\theta,\qquad
+	g_{\theta\varphi}=g_{\varphi\theta}=0.
+	\]
+	Then the inverse matrix has
+	\[
+	g^{\theta\theta}=1,\qquad
+	g^{\varphi\varphi}=\frac{1}{\sin^2\theta},\qquad
+	g^{\theta\varphi}=g^{\varphi\theta}=0.
+	\]
+	
+	Using the formula for Christoffel symbols, we compute the nonzero ones:
+	\begin{align*}
+		\Gamma^{\theta}_{\varphi\varphi}
+		&= \frac12 g^{\theta\theta}
+		\left(
+		\frac{\partial g_{\varphi\theta}}{\partial x^\varphi}
+		+ \frac{\partial g_{\varphi\theta}}{\partial x^\varphi}
+		- \frac{\partial g_{\varphi\varphi}}{\partial x^\theta}
+		\right)
+		= -\sin\theta\cos\theta,\\[0.5em]
+		\Gamma^{\varphi}_{\theta\varphi}
+		&= \Gamma^{\varphi}_{\varphi\theta}
+		= \frac12 g^{\varphi\varphi}
+		\left(
+		\frac{\partial g_{\varphi\varphi}}{\partial x^\theta}
+		+ \frac{\partial g_{\theta\varphi}}{\partial x^\varphi}
+		- \frac{\partial g_{\theta\varphi}}{\partial x^\varphi}
+		\right)
+		= \cot\theta.
+	\end{align*}
+	All other $\Gamma^k_{ij}$ vanish.
+	
+	Therefore, a curve $\gamma(t)=(\theta(t),\varphi(t))$ on $S^2$ is a geodesic if
+	and only if it satisfies
+	\begin{align*}
+		\frac{\dd^2\theta}{\dd t^2}
+		- \sin\theta\cos\theta
+		\left(\frac{\dd\varphi}{\dd t}\right)^2 &= 0,\\[0.5em]
+		\frac{\dd^2\varphi}{\dd t^2}
+		+ 2\cot\theta\,\frac{\dd\theta}{\dd t}\,\frac{\dd\varphi}{\dd t} &= 0.
+	\end{align*}
+	
+	Solving this system explicitly is somewhat involved, but one can show that its
+	solutions are exactly the great circles on $S^2$.  For instance, if we fix a
+	unit vector $u\in\R^3$, then the intersection of $S^2$ with the plane through
+	the origin orthogonal to $u$ is a great circle.  Parameterizing this curve
+	with constant speed yields a solution of the geodesic equation.  Conversely,
+	one can prove that any geodesic on the round sphere extends uniquely to a
+	great circle.
+	
+	\subsection{The punctured plane revisited}
+	
+	We return to the punctured plane
+	\[
+	M = \R^2 \setminus\{0\}
+	\]
+	with the induced Euclidean metric.  In local coordinates away from the origin,
+	the metric is just the standard Euclidean one, so geodesics are locally
+	straight lines.  However, global properties of these geodesics can be more
+	complicated.
+	
+	If $p$ and $q$ lie on the same ray emanating from the origin (say $q=\lambda
+	p$ for some $\lambda>0$), then the straight segment from $p$ to $q$ does not
+	hit the origin and is a geodesic in $M$ that minimizes length between its
+	endpoints.  On the other hand, if $q=-p$ as in
+	Example~\ref{ex:punctured-plane-computation}, then any straight segment from
+	$p$ to $q$ passes through $0$ and is not contained in $M$.  There are many
+	geodesics passing near the origin, but none of them connect $p$ to $q$ in a
+	way that realizes the distance $d_g(p,q)$.
+	
+	This illustrates that the existence of minimizing geodesics between arbitrary
+	pairs of points depends on global conditions like completeness.  The punctured
+	plane is incomplete, and the failure of geodesics to realize distances between
+	some points is one manifestation of this incompleteness.

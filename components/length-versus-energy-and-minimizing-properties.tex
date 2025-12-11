@@ -1,0 +1,113 @@
+	\section{Length versus energy and minimizing properties}
+	\label{sec:length-vs-energy}
+	
+	We now relate the variational characterization of geodesics (via energy) to
+	the more geometric intuition of geodesics as locally length-minimizing curves.
+	
+	\subsection{Arc-length parametrization}
+	
+	Let $\gamma\colon[a,b]\to M$ be a smooth curve with $\dot\gamma(t)\ne 0$ for
+	all $t$.  Define its \emph{arc-length parameter} by
+	\[
+	s(t) = \int_a^t \norm{\dot\gamma(\tau)}_g \dd\tau.
+	\]
+	Then $s\colon[a,b]\to[0,L_g(\gamma)]$ is smooth and strictly increasing, hence
+	a diffeomorphism onto its image.  We can invert it to obtain $t(s)$ and define
+	the reparametrized curve
+	\[
+	\tilde\gamma(s) = \gamma(t(s)).
+	\]
+	By construction, $\tilde\gamma$ has unit speed:
+	\[
+	\norm{\dot{\tilde\gamma}(s)}_g
+	= 1
+	\]
+	for all $s$.  In particular, $L_g(\tilde\gamma)=L_g(\gamma)$.
+	
+	\subsection{Critical points of length vs.\ critical points of energy}
+	
+	The length functional is less convenient to differentiate because of the
+	square root, but for unit-speed curves it is closely related to the energy.
+	
+	\begin{theorem}\label{thm:length-critical}
+		Let $\gamma\colon[a,b]\to M$ be a smooth curve with $\dot\gamma(t)\ne 0$ for
+		all $t$, and let $\tilde\gamma$ be its arc-length reparametrization.  Then:
+		\begin{enumerate}[label=(\roman*),leftmargin=*]
+			\item $\gamma$ is a critical point of the energy functional $E_a^b$ with
+			fixed endpoints if and only if its arc-length reparametrization
+			$\tilde\gamma$ is a critical point of the length functional.
+			\item Any smooth curve $\sigma$ that is critical for the length functional
+			(with fixed endpoints) and has nonvanishing velocity can be
+			reparametrized to a geodesic.
+		\end{enumerate}
+	\end{theorem}
+	
+	\begin{proof}[Sketch of proof]
+		A full proof requires computing the first variation of the length functional,
+		which is similar to, but slightly more complicated than, the computation for
+		the energy.  The idea is as follows.
+		
+		For a unit-speed curve $\tilde\gamma$, the length and energy functionals
+		satisfy
+		\[
+		L_g(\tilde\gamma)
+		= \int_0^{L_g(\gamma)} 1\,\dd s
+		= L_g(\gamma),
+		\]
+		and
+		\[
+		E_0^{L_g(\gamma)}(\tilde\gamma)
+		= \frac12\int_0^{L_g(\gamma)} 1^2\,\dd s
+		= \frac12 L_g(\gamma).
+		\]
+		Thus up to a constant factor, $L$ and $E$ coincide on unit-speed curves.
+		The first variation of $L$ along variations that respect unit speed is
+		proportional to the first variation of $E$.
+		
+		More concretely, if $\tilde\alpha$ is a variation of $\tilde\gamma$ through
+		unit-speed curves with fixed endpoints, then
+		\[
+		\left.\frac{\dd}{\dd u} L_g(\tilde\alpha(u))\right\vert_{u=0}
+		= \frac{1}{\norm{\dot{\tilde\gamma}}^2_g}
+		\left.\frac{\dd}{\dd u}
+		E(\tilde\alpha(u))\right\vert_{u=0}.
+		\]
+		Therefore, the vanishing of the first variation of $E$ is equivalent to the
+		vanishing of the first variation of $L$ under such variations.
+		
+		The second statement follows by applying arc-length reparametrization and then
+		using the characterization of geodesics as critical points of $E$ from
+		Theorem~\ref{thm:geodesic-iff}.  Details can be filled in by adapting the
+		proof of the first variation formula to $L$ instead of $E$.
+	\end{proof}
+	
+	\subsection{Local minimizing property of geodesics}
+	
+	In general, geodesics are critical points of the length functional, not
+	necessarily global minimizers.  Nevertheless, sufficiently short geodesic
+	segments do minimize length between their endpoints.
+	
+	\begin{theorem}[Local minimizing property]
+		Let $(M,g)$ be a Riemannian manifold and $p\in M$.  There exists a
+		neighborhood $U$ of $p$ such that for any $q\in U$ there is a unique
+		geodesic segment $\gamma$ from $p$ to $q$ lying in $U$, and $\gamma$ is the
+		unique minimizing curve between $p$ and $q$.
+	\end{theorem}
+	
+	\begin{proof}[Idea of proof]
+		The proof uses the exponential map $\exp_p\colon T_pM\to M$, which is defined
+		by $\exp_p(v)=\gamma_v(1)$, where $\gamma_v$ is the unique geodesic with
+		$\gamma_v(0)=p$ and $\dot\gamma_v(0)=v$.  For sufficiently small $v$, the map
+		$\exp_p$ is a diffeomorphism onto a neighborhood $U$ of $p$.
+		
+		Geodesics through $p$ correspond to straight lines in $T_pM$ in these
+		coordinates, and one can use this to show that the radial geodesic from $p$ to
+		$q$ is the unique minimizing curve in $U$.  The full proof requires some
+		results from ODE theory and differential topology and is usually given in a
+		course in Riemannian geometry.  We will not reproduce all technical details
+		here, but the key point is that geodesics are indeed locally shortest paths.
+	\end{proof}
+	
+	Our focus in this paper is on the variational derivation of the geodesic
+	equation rather than on these global existence and uniqueness results, so we
+	stop here.

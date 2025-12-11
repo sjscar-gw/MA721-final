@@ -1,0 +1,152 @@
+	\section{Riemannian metrics, length, and distance}
+	\label{sec:prelim}
+	
+	Throughout, $M$ will denote a smooth ($C^\infty$) manifold of dimension $n$.
+	
+	\subsection{Riemannian metrics}
+	
+	\begin{definition}
+		A \emph{Riemannian metric} on $M$ is a smooth assignment to each point
+		$p\in M$ of an inner product
+		\[
+		g_p \colon T_pM \times T_pM \to \R
+		\]
+		such that the map
+		\[
+		M \times TM\times TM \to \R,\qquad
+		(p,v,w) \mapsto g_p(v,w)
+		\]
+		is smooth when restricted to $TM\times TM$ over $M$.  We usually write
+		$\ipg{v}{w} = g_p(v,w)$ when $v,w\in T_pM$, and
+		$\norm{v}_g = \sqrt{\ipg{v}{v}}$.
+	\end{definition}
+	
+	In local coordinates, a Riemannian metric is described by a positive-definite
+	matrix of smooth functions.
+	
+	\begin{example}
+		Let $(U,(x^1,\dots,x^n))$ be a coordinate chart on $M$.  The coordinate vector
+		fields $\partial/\partial x^1,\dots,\partial/\partial x^n$ form a basis for
+		$T_pM$ at each $p\in U$.  The metric $g$ is then determined by its components
+		\[
+		g_{ij}(p) = g_p\!\left(
+		\frac{\partial}{\partial x^i}\Big\vert_p,
+		\frac{\partial}{\partial x^j}\Big\vert_p
+		\right),
+		\]
+		which form a smooth positive-definite symmetric matrix $(g_{ij})$.  We often
+		write
+		\[
+		g = \sum_{i,j=1}^n g_{ij}(x) \dd x^i \otimes \dd x^j.
+		\]
+	\end{example}
+	
+	\subsection{Length of curves}
+	
+	\begin{definition}
+		Let $\gamma\colon [a,b]\to M$ be a piecewise $C^\infty$ curve.  The
+		\emph{velocity} of $\gamma$ at $t$ is $\dot\gamma(t) = \dd\gamma/\dd t \in
+		T_{\gamma(t)}M$.  The \emph{length} of $\gamma$ with respect to $g$ is
+		\[
+		L_g(\gamma)
+		= \int_a^b \norm{\dot\gamma(t)}_g \dd t
+		= \int_a^b \sqrt{
+			g_{\gamma(t)}\bigl(\dot\gamma(t),\dot\gamma(t)\bigr)
+		}\,\dd t.
+		\]
+	\end{definition}
+	
+	It is straightforward to check that the length is invariant under
+	orientation-preserving reparametrizations: if $\phi\colon [c,d]\to[a,b]$ is a
+	smooth, strictly increasing bijection and $\tilde\gamma = \gamma\circ\phi$,
+	then $L_g(\tilde\gamma)=L_g(\gamma)$.
+	
+	\begin{example}
+		In $\R^n$ with the standard metric
+		$g = \sum_{i=1}^n \dd x^i\otimes\dd x^i$, the length reduces to the usual
+		formula
+		\[
+		L_g(\gamma)
+		= \int_a^b \sqrt{ \sum_{i=1}^n
+			\left(\frac{\dd \gamma^i}{\dd t}(t)\right)^2 }\,\dd t,
+		\]
+		where $\gamma(t) = (\gamma^1(t),\dots,\gamma^n(t))$.
+	\end{example}
+	
+	\subsection{The Riemannian distance function}
+	
+	\begin{definition}
+		Let $(M,g)$ be a connected Riemannian manifold.  For $p,q\in M$ the
+		\emph{Riemannian distance} between $p$ and $q$ is
+		\[
+		d_g(p,q)
+		= \inf\{ L_g(\gamma) \mid \gamma\colon [a,b]\to M
+		\text{ piecewise $C^\infty$},\ \gamma(a)=p,\ \gamma(b)=q\}.
+		\]
+	\end{definition}
+	
+	We now prove that this defines a metric on $M$.
+	
+	\begin{proposition}
+		The function $d_g\colon M\times M\to\R$ is a metric, i.e.
+		\begin{enumerate}[label=(\roman*),leftmargin=*]
+			\item $d_g(p,q)\ge 0$ and $d_g(p,q)=0$ if and only if $p=q$,
+			\item $d_g(p,q) = d_g(q,p)$, and
+			\item $d_g(p,r)\le d_g(p,q)+d_g(q,r)$ for all $p,q,r\in M$.
+		\end{enumerate}
+	\end{proposition}
+	
+	\begin{proof}
+		(i) By definition, $L_g(\gamma)\ge 0$ for every curve $\gamma$, so
+		$d_g(p,q)\ge 0$.  If $p=q$, the constant curve $\gamma(t)\equiv p$ has
+		length zero, so $d_g(p,p)=0$.
+		
+		Conversely, suppose $d_g(p,q)=0$.  Let $(U,(x^1,\dots,x^n))$ be a coordinate
+		chart containing $p$, and fix a Euclidean norm $\norm{\cdot}$ on $\R^n$.
+		Since $g$ is positive definite and smooth, there exist constants
+		$0<c<C<\infty$ such that
+		\[
+		c\norm{v} \le \norm{v}_g \le C\norm{v}
+		\]
+		for all $v$ in tangent spaces over a small neighborhood of $p$.  If
+		$q\ne p$ is sufficiently close to $p$, then there is a smooth curve
+		$\gamma$ in $U$ from $p$ to $q$, and its Euclidean length is bounded below by
+		some positive number depending on $\norm{x(q)-x(p)}$.  The inequalities above
+		imply $L_g(\gamma)\ge c \,L_{\mathrm{Eucl}}(\gamma) >0$, so
+		$d_g(p,q)>0$.  Thus if $d_g(p,q)=0$, we must have $p=q$.
+		
+		(ii) Symmetry is clear: if $\gamma$ is a curve from $p$ to $q$, then the
+		reversed curve $\tilde\gamma(t) = \gamma(a+b-t)$ has the same length and goes
+		from $q$ to $p$.  Taking infima gives $d_g(p,q)=d_g(q,p)$.
+		
+		(iii) For the triangle inequality, fix $p,q,r\in M$ and $\varepsilon>0$.
+		Choose piecewise smooth curves $\gamma_1$ from $p$ to $q$ and $\gamma_2$ from
+		$q$ to $r$ such that
+		\[
+		L_g(\gamma_1) \le d_g(p,q) + \varepsilon,\qquad
+		L_g(\gamma_2) \le d_g(q,r) + \varepsilon.
+		\]
+		Define the concatenated curve
+		\[
+		\gamma(t)
+		= \begin{cases}
+			\gamma_1(2t), & t\in[0,\tfrac12],\\
+			\gamma_2(2t-1), & t\in[\tfrac12,1].
+		\end{cases}
+		\]
+		Then
+		\[
+		L_g(\gamma) = L_g(\gamma_1)+L_g(\gamma_2)
+		\le d_g(p,q) + d_g(q,r) + 2\varepsilon.
+		\]
+		Taking the infimum over all such $\gamma$ gives
+		$d_g(p,r) \le d_g(p,q) + d_g(q,r) + 2\varepsilon$, and since $\varepsilon>0$
+		was arbitrary, we obtain the triangle inequality.
+	\end{proof}
+	
+	It is also true that the metric topology induced by $d_g$ agrees with the
+	original manifold topology.  A full proof requires some more work, but the
+	idea is that in local coordinates, the inequality
+	$c\norm{v}\le\norm{v}_g\le C\norm{v}$ implies that the $d_g$-balls and the
+	Euclidean balls define the same notion of ``small neighborhood.''  We will not
+	need the precise details later.

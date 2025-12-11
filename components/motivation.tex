@@ -1,0 +1,141 @@
+	\section{Motivation}
+
+	One of the first geometric facts we learn is that, in the Euclidean plane,
+	the shortest path between two points is a straight line.  This statement is
+	so familiar that it is easy to forget how much structure is hidden in it: we
+	are using both the linear structure of $\R^n$ and its standard inner product
+	to talk about lengths, angles, and straightness.  As soon as we leave the flat
+	world of Euclidean space, the situation becomes less obvious.
+	
+	For example, on the surface of the Earth, airplanes do not follow straight line
+	segments in $\R^3$, but rather arcs of great circles on the sphere.  These
+	arcs are locally distance minimizing: near any point on such a curve, if you
+	look only at sufficiently short subsegments, they realize the shortest path
+	between their endpoints along the surface of the Earth.  From the intrinsic
+	point of view of the sphere, they play exactly the role that straight lines
+	play in $\R^n$.  This leads to the central question of this paper:
+	
+	\begin{center}
+		\emph{How can we make sense of ``straightest'' or ``shortest'' curves at constant veloctiy on an
+			arbitrary smooth manifold?}
+	\end{center}
+	
+	The modern answer begins with the notion of a \emph{Riemannian metric}.
+	Informally, a Riemannian metric $g$ on a smooth manifold $M$ gives each
+	tangent space $T_pM$ the structure of an inner product space, in a way that
+	varies smoothly with the point $p$.  Once such a metric is chosen, we can
+	measure the length of tangent vectors, and by integration we obtain lengths of
+	curves.  From the lengths of curves we define a distance function $d_g(p,q)$
+	by taking an infimum over all curves from $p$ to $q$.
+	
+	Curves that ``realize'' this distance (or at least make it stationary) are
+	called \emph{geodesics}.  Geodesics play the role of straight lines in this
+	more general setting.  They are important both for purely geometric reasons
+	and for applications: in physics, for instance, geodesics in a Lorentzian
+	manifold represent the trajectories of freely-falling particles in general
+	relativity.
+	
+	There are several different but equivalent ways to characterize geodesics:
+	
+	\begin{itemize}[leftmargin=*]
+		\item As locally length-minimizing curves.
+		\item As curves with zero covariant acceleration,
+		$\nabla_{\dot\gamma}\dot\gamma = 0$.
+		\item As critical points of the energy functional
+		\[
+		E(\gamma)
+		= \frac12\int_a^b \norm{\dot\gamma(t)}_g^2 \dd t
+		\]
+		under variations that fix the endpoints.
+	\end{itemize}
+	
+	The last point is the variational point of view, and it is the main focus of
+	this paper.  Instead of guessing the geodesic equation and then justifying it,
+	we will start from the length and energy functionals on the space of curves
+	and derive the geodesic equation as an Euler--Lagrange equation.  This approach
+	fits naturally with classical problems in the calculus of variations and gives
+	a conceptually clean derivation of the geodesic equation.
+	
+	\subsection{A motivating example: the punctured plane}
+	
+	Before getting into definitions, it is useful to see that the distance function
+	behaves in a slightly subtle way even in a very simple example.
+	
+	\begin{example}[The punctured plane]\label{ex:punctured-plane}
+		Let $M = \R^2 \setminus \{0\}$ with the Riemannian metric $g$ induced by
+		the standard Euclidean inner product on $\R^2$.  Fix a point
+		$p \in M$ and let $q = -p$.  In the full plane $\R^2$, the unique straight
+		line segment from $p$ to $q$ has length $2\norm{p}$ and realizes the Euclidean
+		distance between $p$ and $q$.
+		
+		However, in $M$ this straight segment is not allowed, because it passes through
+		the origin, which has been removed.  Any piecewise smooth curve
+		$\gamma \colon [a,b] \to M$ with $\gamma(a) = p$ and $\gamma(b) = q$ must
+		``go around'' the origin.  Intuitively, we still expect the distance between
+		$p$ and $q$ to be $2\norm{p}$, but there will be no curve in $M$ that actually
+		achieves this length.
+	\end{example}
+	
+	We now make this more precise in one concrete case.
+	
+	\begin{example}\label{ex:punctured-plane-computation}
+		Take $p=(1,0)$ and $q=(-1,0)$, and let $M = \R^2 \setminus \{0\}$ as above.
+		For each $\varepsilon > 0$ consider the curve $\gamma_\varepsilon$ that goes
+		from $(1,0)$ to $(\varepsilon,0)$ along the $x$-axis, then follows a
+		semicircle of radius $\varepsilon$ around the origin to $(-\varepsilon,0)$,
+		and then goes from $(-\varepsilon,0)$ to $(-1,0)$ along the $x$-axis.
+		
+		The first and last segments have total length $2(1-\varepsilon)$, and the
+		semicircular arc has length $\pi \varepsilon$.  Therefore
+		\[
+		L_g(\gamma_\varepsilon)
+		= 2(1-\varepsilon) + \pi\varepsilon
+		= 2 + (\pi - 2)\varepsilon.
+		\]
+		As $\varepsilon \to 0^+$ we get $L_g(\gamma_\varepsilon)\to 2$.
+		
+		On the other hand, every curve in $M$ from $p$ to $q$ must go around the
+		origin, and hence has length strictly greater than $2$: if a curve could
+		achieve length exactly $2$, it would have to coincide with the straight line
+		segment from $(1,0)$ to $(-1,0)$, and that passes through the origin.  Thus
+		\[
+		d_g(p,q) = 2
+		\]
+		but there is no curve $\gamma$ in $M$ with $L_g(\gamma) = d_g(p,q)$.  The
+		distance is an \emph{infimum} of lengths, not necessarily a \emph{minimum}.
+	\end{example}
+	
+	This example illustrates both the usefulness and the subtlety of the distance
+	function.  It also hints at the importance of global assumptions like
+	completeness in the study of geodesics.  In complete Riemannian manifolds,
+	geodesics are known to realize distances between nearby points, but in
+	incomplete manifolds strange things, like the punctured plane, can happen.
+	
+	\subsection{Goals and outline}
+	
+	The main goal of this paper is to give a self-contained derivation of the
+	geodesic equation on a Riemannian manifold using the calculus of variations,
+	and to connect this equation with the intuitive idea of geodesics as shortest
+	curves.  Roughly speaking, we will:
+	
+	\begin{itemize}[leftmargin=*]
+		\item Define Riemannian metrics, curve length, and the induced distance
+		function $d_g$.
+		\item Introduce variations of curves and define the energy functional.
+		\item Derive the first variation formula for the energy.
+		\item Show that critical points of the energy are precisely smooth curves
+		satisfying the geodesic equation $\nabla_{\dot\gamma}\dot\gamma=0$.
+		\item Relate geodesics to length-minimizing curves and discuss examples.
+	\end{itemize}
+	
+	The structure of the paper is as follows.  In Section~\ref{sec:prelim} we
+	review Riemannian metrics, the length of curves, and the Riemannian distance.
+	In Section~\ref{sec:variations} we define variations of curves and the energy
+	functional.  Section~\ref{sec:first-variation} is devoted to the first
+	variation formula.  In Section~\ref{sec:geodesic-equation} we characterize
+	geodesics as curves satisfying a second-order ODE, the geodesic equation, and
+	show the equivalence with being critical points of the energy.  In
+	Section~\ref{sec:length-vs-energy} we relate energy and length and explain how
+	geodesics arise as locally minimizing curves.  Finally, in
+	Section~\ref{sec:examples} we compute geodesics explicitly in some important
+	examples.
