@@ -4,9 +4,9 @@
 	Throughout, $M$ will denote a smooth ($C^\infty$) manifold of dimension $n$.
 	
 	\subsection{Riemannian metrics}
-	
-	\begin{definition}
-		A \emph{Riemannian metric} on $M$ is a smooth assignment to each point
+
+	\begin{definition}\label{dfn:riemannian-metric}
+		Let $M$ be a smooth manifold. A \emph{Riemannian metric} $g$ on $M$ is a smooth section of $\mathcal{T} ^2(M)=T^*M\otimes T^*M$. More intuitively, $g$ is a smooth assignment to each point
 		$p\in M$ of an inner product
 		\[
 		g_p \colon T_pM \times T_pM \to \R
@@ -18,15 +18,14 @@
 		\]
 		is smooth when restricted to $TM\times TM$ over $M$.  We usually write
 		$\ipg{v}{w} = g_p(v,w)$ when $v,w\in T_pM$, and
-		$\norm{v}_g = \sqrt{\ipg{v}{v}}$.
+		$\norm{v}_g = \sqrt{\ipg{v}{v}}$. A \emph{Riemannian manifold} is a manifold $M$ together with a Riemannian metric $g$.
 	\end{definition}
-	
-	In local coordinates, a Riemannian metric is described by a positive-definite
-	matrix of smooth functions.
+
+	All manifolds admit at least one Riemannian metric by \cite{lee} Proposition 13.3, but oftentimes this metric may not be desirable.
 	
 	\begin{example}
 		Let $(U,(x^1,\dots,x^n))$ be a coordinate chart on $M$.  The coordinate vector
-		fields $\partial/\partial x^1,\dots,\partial/\partial x^n$ form a basis for
+		fields $\partial_{x^1},\dots,\partial_{x^n}$ form a basis for
 		$T_pM$ at each $p\in U$.  The metric $g$ is then determined by its components
 		\[
 		g_{ij}(p) = g_p\!\left(
@@ -40,11 +39,13 @@
 		g = \sum_{i,j=1}^n g_{ij}(x) \dd x^i \otimes \dd x^j.
 		\]
 	\end{example}
+
+	Unless otherwise specified, all manifolds in this paper are assumed to be Riemannian manifolds with Riemannian metric $g$.
 	
 	\subsection{Length of curves}
 	
 	\begin{definition}
-		Let $\gamma\colon [a,b]\to M$ be a piecewise $C^\infty$ curve.  The
+		Let $\gamma\colon [a,b]\to M$ a piecewise $C^\infty$ curve on a manifold $M$.  The
 		\emph{velocity} of $\gamma$ at $t$ is $\dot\gamma(t) = \dd\gamma/\dd t \in
 		T_{\gamma(t)}M$.  The \emph{length} of $\gamma$ with respect to $g$ is
 		\[
@@ -64,7 +65,7 @@
 	\begin{example}
 		In $\R^n$ with the standard metric
 		$g = \sum_{i=1}^n \dd x^i\otimes\dd x^i$, the length reduces to the usual
-		formula
+		length formula
 		\[
 		L_g(\gamma)
 		= \int_a^b \sqrt{ \sum_{i=1}^n
@@ -99,10 +100,8 @@
 	\begin{proof}
 		(i) By definition, $L_g(\gamma)\ge 0$ for every curve $\gamma$, so
 		$d_g(p,q)\ge 0$.  If $p=q$, the constant curve $\gamma(t)\equiv p$ has
-		length zero, so $d_g(p,p)=0$.
-		
-		Conversely, suppose $d_g(p,q)=0$.  Let $(U,(x^1,\dots,x^n))$ be a coordinate
-		chart containing $p$, and fix a Euclidean norm $\norm{\cdot}$ on $\R^n$.
+		length zero, so $d_g(p,p)=0$. Conversely, suppose $d_g(p,q)=0$.  Let $(U,(x^1,\dots,x^n))$ be a coordinate
+		chart containing $p$, and fix the Euclidean norm $\norm{\cdot}$ on $\R^n$.
 		Since $g$ is positive definite and smooth, there exist constants
 		$0<c<C<\infty$ such that
 		\[
@@ -117,7 +116,7 @@
 		
 		(ii) Symmetry is clear: if $\gamma$ is a curve from $p$ to $q$, then the
 		reversed curve $\tilde\gamma(t) = \gamma(a+b-t)$ has the same length and goes
-		from $q$ to $p$.  Taking infima gives $d_g(p,q)=d_g(q,p)$.
+		from $q$ to $p$. Taking infima gives $d_g(p,q)=d_g(q,p)$.
 		
 		(iii) For the triangle inequality, fix $p,q,r\in M$ and $\varepsilon>0$.
 		Choose piecewise smooth curves $\gamma_1$ from $p$ to $q$ and $\gamma_2$ from
@@ -149,4 +148,4 @@
 	idea is that in local coordinates, the inequality
 	$c\norm{v}\le\norm{v}_g\le C\norm{v}$ implies that the $d_g$-balls and the
 	Euclidean balls define the same notion of ``small neighborhood.''  We will not
-	need the precise details later.
+	need the precise details later, so see \cite{lee} Theorem 13.29 for a full proof.
