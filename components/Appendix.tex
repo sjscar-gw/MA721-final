@@ -1,7 +1,7 @@
 %! Author = aarys
 %! Date = 12/13/2025
 
-\section*{Appendix}
+\section{Appendix}
 
 \subsection{Code of the visualization}
 \begin{verbatim}
@@ -14,7 +14,8 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QOpenGLWidget,
-                             QVBoxLayout, QWidget, QLabel, QPushButton, QHBoxLayout, QMessageBox,
+                             QVBoxLayout, QWidget, QLabel, QPushButton,
+                             QHBoxLayout, QMessageBox,
                              QGroupBox, QGridLayout, QDoubleSpinBox)
 
 
@@ -393,5 +394,109 @@ if __name__ == '__main__':
 
 \end{verbatim}
 
-\subsection{Proof of the \emph{compute_geodesic(self, p1, p2, num_points=100)} method}
+\subsection{Proof of the \emph{compute\_geodesic(self, p1, p2, num\_points=100)} method}
+The great circle is the set of points
+\[
+    C_{\mathbf{u},\mathbf{v}} = \{R(\cos\theta\,\mathbf{u} + \sin\theta\,\mathbf{v}) : \theta \in [0,2\pi)\},
+\]
+where $\mathbf{u},\mathbf{v}$ are orthonormal vectors in $\mathbb{R}^3$.
+
+The function first normalizes the input points to lie on the unit sphere:
+\[
+    \hat{\mathbf{p}}_i = \frac{\mathbf{p}_i}{\|\mathbf{p}_i\|}, \quad i=1,2.
+\]
+Define the angle between them as
+\[
+    \theta = \arccos(\hat{\mathbf{p}}_1 \cdot \hat{\mathbf{p}}_2), \quad \theta \in [0,\pi].
+\]
+The algorithm handles three distinct cases based on $\theta$:
+\begin{enumerate}
+    \item Nearly antipodal points: $|\hat{\mathbf{p}}_1 \cdot \hat{\mathbf{p}}_2 + 1| < \epsilon$
+
+    When $\hat{\mathbf{p}}_1 \approx -\hat{\mathbf{p}}_2$ (i.e., $\theta \approx \pi$), there are infinitely many great circles connecting them. The code selects one by:
+
+    \begin{enumerate}
+        \item Choosing an axis orthogonal to $\hat{\mathbf{p}}_1$:
+        \[
+            \mathbf{a} = \begin{cases}
+                             \hat{\mathbf{p}}_1 \times (0,0,1) & \text{if } \|\hat{\mathbf{p}}_1 \times (0,0,1)\| > \epsilon,\\
+                             \hat{\mathbf{p}}_1 \times (1,0,0) & \text{otherwise}.
+            \end{cases}
+        \]
+        Then normalize: $\mathbf{k} = \mathbf{a}/\|\mathbf{a}\|$.
+        \item Applying Rodrigues' rotation formula with angle $\phi = t\pi$:
+        \[
+            \mathbf{q}(t) = \hat{\mathbf{p}}_1 \cos\phi + (\mathbf{k} \times \hat{\mathbf{p}}_1) \sin\phi + \mathbf{k}(\mathbf{k} \cdot \hat{\mathbf{p}}_1)(1 - \cos\phi).
+        \]
+        Since $\mathbf{k} \perp \hat{\mathbf{p}}_1$, the last term vanishes.
+    \end{enumerate}
+
+    \textbf{Claim 8.2.1:} The curve $\mathbf{q}(t)$ lies on a great circle through $\hat{\mathbf{p}}_1$ and $-\hat{\mathbf{p}}_1$.
+
+    \textbf{Proof:} Let $\mathbf{v} = \mathbf{k} \times \hat{\mathbf{p}}_1$. Since $\mathbf{k}$ is unit and orthogonal to $\hat{\mathbf{p}}_1$, $\mathbf{v}$ is also unit and orthogonal to both $\mathbf{k}$ and $\hat{\mathbf{p}}_1$. Thus $\{\hat{\mathbf{p}}_1, \mathbf{v}\}$ forms an orthonormal basis for the plane perpendicular to $\mathbf{k}$. Rodrigues' formula gives:
+    \[
+        \mathbf{q}(t) = \cos(t\pi) \hat{\mathbf{p}}_1 + \sin(t\pi) \mathbf{v}.
+    \]
+    This is exactly a unit-speed parametrization of the circle in this plane. At $t=0$, $\mathbf{q}(0) = \hat{\mathbf{p}}_1$; at $t=1$, $\mathbf{q}(1) = -\hat{\mathbf{p}}_1 = \hat{\mathbf{p}}_2$.
+
+
+    \item Very close points: $\theta < 0.001$
+
+    When $\theta < 0.001$, the code uses linear interpolation with normalization:
+    \[
+        \mathbf{q}(t) = \frac{(1-t)\hat{\mathbf{p}}_1 + t\hat{\mathbf{p}}_2}{\|(1-t)\hat{\mathbf{p}}_1 + t\hat{\mathbf{p}}_2\|}.
+    \]
+
+    \textbf{Claim 8.2.2:}
+    For sufficiently small $\theta$, $\mathbf{q}(t)$ approximates the great circle arc between $\hat{\mathbf{p}}_1$ and $\hat{\mathbf{p}}_2$, and lies exactly on some great circle.
+
+    \textbf{Proof:} The denominator $\|(1-t)\hat{\mathbf{p}}_1 + t\hat{\mathbf{p}}_2\|$ is non-zero because for small $\theta$, the two points are not opposite. Since $\mathbf{q}(t)$ is a scalar multiple of a vector in the span of $\hat{\mathbf{p}}_1$ and $\hat{\mathbf{p}}_2$, it lies in the same plane. Normalization puts it on the unit sphere, hence on the great circle defined by that plane.
+
+    The approximation error compared to exact SLERP is $O(\theta^2)$. For $\theta < 0.001$, this error is negligible ($< 10^{-6}$).
+
+    \item General case: $\theta \geq 0.001$ and not nearly antipodal
+
+    the code uses the standard SLERP formula:
+    \[
+        \mathbf{q}(t) = \frac{\sin((1-t)\theta)}{\sin\theta} \hat{\mathbf{p}}_1 + \frac{\sin(t\theta)}{\sin\theta} \hat{\mathbf{p}}_2, \quad t \in [0,1].
+    \]
+
+    \textbf{Claim 8.2.3}:
+    For any $t \in [0,1]$, $\mathbf{q}(t)$ lies on the great circle through $\hat{\mathbf{p}}_1$ and $\hat{\mathbf{p}}_2$.
+
+    \textbf{Proof:} We verify two properties:
+    \begin{enumerate}
+        \item Unit norm: \begin{align*}
+                             \|\mathbf{q}(t)\|^2 &= \left(\frac{\sin((1-t)\theta)}{\sin\theta}\right)^2 + \left(\frac{\sin(t\theta)}{\sin\theta}\right)^2 \\
+                             &\quad + 2\frac{\sin((1-t)\theta)\sin(t\theta)}{\sin^2\theta} (\hat{\mathbf{p}}_1 \cdot \hat{\mathbf{p}}_2).
+        \end{align*}
+        Since $\hat{\mathbf{p}}_1 \cdot \hat{\mathbf{p}}_2 = \cos\theta$, we have:
+        \begin{align*}
+            \|\mathbf{q}(t)\|^2 &= \frac{\sin^2((1-t)\theta) + \sin^2(t\theta) + 2\sin((1-t)\theta)\sin(t\theta)\cos\theta}{\sin^2\theta}.
+        \end{align*}
+        Using the trigonometric identities:
+        \begin{align*}
+            \sin^2\alpha + \sin^2\beta &= 1 - \cos(\alpha+\beta)\cos(\alpha-\beta), \\
+            2\sin\alpha\sin\beta\cos(\alpha+\beta) &= \cos(\alpha-\beta) - \cos(\alpha+\beta)\cos^2(\alpha+\beta)?
+        \end{align*}
+        Instead, compute directly:
+        \begin{align*}
+            &\sin^2((1-t)\theta) + \sin^2(t\theta) \\
+            &= 1 - \frac{\cos(2(1-t)\theta) + \cos(2t\theta)}{2} \\
+            &= 1 - \cos((1-2t)\theta)\cos\theta.
+        \end{align*}
+        Also,
+        \[
+            2\sin((1-t)\theta)\sin(t\theta)\cos\theta = [\cos((1-2t)\theta) - \cos\theta]\cos\theta.
+        \]
+        Adding these:
+        \[
+            1 - \cos((1-2t)\theta)\cos\theta + \cos((1-2t)\theta)\cos\theta - \cos^2\theta = 1 - \cos^2\theta = \sin^2\theta.
+        \]
+        Thus $\|\mathbf{q}(t)\|^2 = 1$, so $\mathbf{q}(t)$ lies on the unit sphere.
+        \item Planarity: Since $\mathbf{q}(t)$ is a linear combination of $\hat{\mathbf{p}}_1$ and $\hat{\mathbf{p}}_2$, it lies in the plane spanned by them. The intersection of this plane with the sphere is a great circle.
+    \end{enumerate}
+\end{enumerate}
+
+The final output scales $\mathbf{q}(t)$ by $R$: $\mathbf{p}(t) = R\mathbf{q}(t) \in S^2_R$.
 
