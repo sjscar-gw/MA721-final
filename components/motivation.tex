@@ -76,8 +76,6 @@
 		achieves this length.
 	\end{example}
 	
-	We now make this more precise in one concrete case.
-	
 	\begin{example}\label{ex:punctured-plane-computation}
 		Take $p=(1,0)$ and $q=(-1,0)$, and let $M = \R^2 \setminus \{0\}$ as above.
 		For each $\varepsilon > 0$ consider the curve $\gamma_\varepsilon$ that goes
@@ -86,30 +84,23 @@
 		and then goes from $(-\varepsilon,0)$ to $(-1,0)$ along the $x$-axis.
 		
 		The first and last segments have total length $2(1-\varepsilon)$, and the
-		semicircular arc has length $\pi \varepsilon$.  Therefore
+		semicircular arc has length $\pi \varepsilon$. Writing $L_g$ for the length of a curve $\gamma _\varepsilon $,
 		\[
 		L_g(\gamma_\varepsilon)
 		= 2(1-\varepsilon) + \pi\varepsilon
 		= 2 + (\pi - 2)\varepsilon.
 		\]
-		As $\varepsilon \to 0^+$ we get $L_g(\gamma_\varepsilon)\to 2$.
+		As $\varepsilon \to 0^+$ we get $L_g(\gamma_\varepsilon)\to 2$. If we view distance $d_g$ as the infimum over lengths of piecewise smooth curves from $p$ to $q$, then $d_g(p,q)=2$.
 		
 		On the other hand, every curve in $M$ from $p$ to $q$ must go around the
 		origin, and hence has length strictly greater than $2$: if a curve could
 		achieve length exactly $2$, it would have to coincide with the straight line
-		segment from $(1,0)$ to $(-1,0)$, and that passes through the origin.  Thus
-		\[
-		d_g(p,q) = 2
-		\]
-		but there is no curve $\gamma$ in $M$ with $L_g(\gamma) = d_g(p,q)$.  The
-		distance is an \emph{infimum} of lengths, not necessarily a \emph{minimum}.
+		segment from $(1,0)$ to $(-1,0)$, and that passes through the origin.  Thus $d_g(p,q)=2$, but there is no curve $\gamma$ in $M$ with $L_g(\gamma) = d_g(p,q)$.
 	\end{example}
 	
 	This example illustrates both the usefulness and the subtlety of the distance
 	function.  It also hints at the importance of global assumptions like
-	completeness in the study of geodesics.  In complete Riemannian manifolds,
-	geodesics are known to realize distances between nearby points, but in
-	incomplete manifolds strange things, like the punctured plane, can happen.
+	completeness in the study of geodesics. In a \emph{complete} or \emph{geodesically complete} and connected Riemannian manifold, any two points can be joined by a geodesic of minimal length (\cite[Ch9~Thm.~18]{spivak}).
 	
 	\subsection{Goals and outline}
 	

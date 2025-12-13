@@ -1,8 +1,10 @@
 	\section{Variations and the energy functional}
 	\label{sec:variations}
+
+	As noted earlier, a geodesic is intuitively understood to be a curve of minimal length, a locally length-minimizing curve. We also noted that this notion does not always agree with the Riemannian distance function, as seen in Example \ref{ex:punctured-plane-computation}. To make precise when these two notions agree, we first provide a classification of geodesics. This classification will be the focus of much of this paper. Much of our presentation for this part follows that of \cite{spivak}.
 	
 	In order to find critical points of the length or energy functional, we need a
-	way to perturb a given curve.
+	way to perturb a given curve. For this, we look to the calculus of variations.
 	
 	\subsection{Variations of curves}
 	
@@ -54,7 +56,7 @@
 	L_g(\gamma)
 	= \int_a^b \norm{\dot\gamma(t)}_g \dd t
 	\]
-	is possible but somewhat technical because of the square root.  It is more
+	is possible but somewhat technical because of the square root in the definition of the norm.  It is more
 	convenient to work with the \emph{energy functional}, whose integrand is
 	quadratic in the velocity.
 	
@@ -78,8 +80,6 @@
 	\]
 	vanishes for every variation $\alpha$ that fixes endpoints.
 	
-	The energy and length functionals are closely related.
-	
 	\begin{proposition}\label{prop:length-energy-ineq}
 		Let $\gamma\colon[a,b]\to M$ be piecewise $C^\infty$.  Then
 		\[
@@ -90,24 +90,21 @@
 	\end{proposition}
 	
 	\begin{proof}
-		Set $f(t) = \norm{\dot\gamma(t)}_g$.  By Cauchy--Schwarz,
+		By the Cauchy--Schwarz inequality on $L^2$ applied to $\left\| \dot{\gamma } (t) \right\|_g$ and the constant function at 1,
 		\[
-		\left( \int_a^b f(t)\,\dd t \right)^2
-		\le (b-a)\int_a^b f(t)^2\,\dd t,
+		\left( \int_a^b \left\| \dot{\gamma }(t) \right\|_g \,\dd t \right)^2
+		\leq  (b-a)\int_a^b \left\| \dot{\gamma }(t)  \right\|^2\,\dd t,
 		\]
-		with equality if and only if $f$ is constant almost everywhere.  The left-hand
+		with equality if and only if $\left| \gamma (t) \right| $ is constant almost everywhere.  The left-hand
 		side is $L_g(\gamma)^2$, while the right-hand side is
 		\[
-		(b-a)\int_a^b f(t)^2\,\dd t
-		= (b-a)\int_a^b \norm{\dot\gamma(t)}_g^2\,\dd t
+		 (b-a)\int_a^b \norm{\dot\gamma(t)}_g^2\,\dd t
 		= 2(b-a)\,E_a^b(\gamma).
 		\]
-		The condition for equality is exactly that $\norm{\dot\gamma(t)}_g$ be
-		constant.
 	\end{proof}
 	
 	This shows that among curves with fixed endpoints and fixed parameter
 	interval $[a,b]$, those with constant speed are the ones for which energy and
 	length are most tightly related.  In particular, any curve that minimizes
 	energy among all curves with the same endpoints and parameter interval must
-	have constant speed.
+	have constant speed. We will later see that this relation admits a converse in the sense that critical points for $L_g$ are reparameterizations of those for $E_a^b$.

@@ -13,7 +13,7 @@
 	$a=t_0<\dots<t_N=b$ such that $\gamma$ is $C^\infty$ on each open subinterval
 	$(t_i,t_{i+1})$.
 	
-	\begin{definition}
+	\begin{definition}\label{dfn:jump}
 		For $1\le i\le N-1$, the \emph{left} and \emph{right} derivatives of $\gamma$
 		at $t_i$ are defined by
 		\[
@@ -33,11 +33,13 @@
 		\Delta_{t_N}\dot\gamma = -\dot\gamma(t_N^-).
 		\]
 	\end{definition}
+
+	\begin{remark}\label{rmk:4.2}
+		If $\gamma $ is $C^\infty $ on the entire interval $[a,b]$, then all jumps vanish except for the jumps at the endpoints $\Delta_{t_0} \dot{\gamma }$ and $\Delta _{t_N}\dot{\Gamma } $.
+	\end{remark}
 	
-	If $\gamma$ is $C^\infty$ on the entire interval $[a,b]$, then all jumps
-	$\Delta_{t_i}\dot\gamma$ vanish.
 	
-	\subsection{A key lemma from the calculus of variations}
+	\subsection{The first variation formula}
 	
 	We will repeatedly use the following linear-algebraic lemma.
 	
@@ -70,16 +72,43 @@
 		strictly positive.  This contradicts the assumption that the integral is
 		always zero.  Hence $W(t)=0$ for all $t$.
 	\end{proof}
+	\begin{corollary}
+		Let $W : [a,b] \to \mathbb{R} $ be continuous. Suppose that
+		\[
+			\int _a^b V(t)W(t) \,\mathrm{d} t=0
+		\]
+		for every smooth $V : [a,b] \to \mathbb{R} $ with $V(a)=V(b)=0$. Then $W(t)\equiv 0$ on $[a,b]$.
+	\end{corollary}
+	\begin{proof}
+		Taking $n=1$ in Lemma \ref{lem:test-fields}, note that $\left\langle V(t),W(t) \right\rangle =V(t)W(t)$.
+	\end{proof}
 	
-	The same argument works for vector fields along a curve in a manifold if we
-	use a coordinate chart.
+	Since manifolds have local coordinates, and thus can be locally identified with $\mathbb{R} ^n$, we can invoke Lemma \ref{lem:test-fields} on manifolds provided we restrict ourselves within a single chart.
 	
-	\subsection{The first variation formula}
+	Before we state and prove the first variation formula, we introduce some notation.
+
+	\begin{definition}\label{dfn:christoffel-levi-civita-covariant}
+		Let $(M,g)$ be a Riemannian $n$-manifold. The \emph{Christoffel symbol} $\Gamma _{ij} ^k$ is defined as
+		\[
+			\Gamma _{ij} ^k=\frac{1}{2} \sum_{m=1}^ng^{km} \left( \frac{\partial g_{jm} }{\partial x^i} +\frac{\partial g_{im} }{\partial x^j} -\frac{\partial g_{ij} }{\partial x^m}  \right) 
+		.\]
+		Define the \emph{Levi-Civita connection} $\nabla : \mathfrak{X} (M)\times \mathfrak{X}(M) \to \mathfrak{X} (M)$ on $(M,g)$ as the map
+		\[
+			\nabla (\partial_{x^i} ,\partial_{x^j})=\sum_{k=1} ^n \Gamma_{ij} ^k \partial_{x^k}
+		\]
+		which is $C^\infty (M)$-linear (and thus $\mathbb{R} $-linear via constant functions) in the first argument and satisfies the following product rule in the second: for any smooth $f: M \to \mathbb{R} $,
+		\[
+			\nabla_X(fY)=f\nabla _XY+(Xf)Y
+		.\]
+		We generally write $\nabla(X,Y)$ as $\nabla _XY$. We will often call $\nabla _XY$ the \emph{covariant derivative} of $Y$ in the direction of $X$.
+	\end{definition}
+	\begin{remark}
+		Given $p\in M$, we can evaluate the Christoffel symbols $\Gamma _{ij} ^k(p)$ at the point $p$ by taking a coordinate representation of $g$ in a chart around $p$, and then evaluating the partial dertivatives of $g_{ij} $ at $p$. Moreover, this representation is manifestly independent of the choice of coordinates by invariance of $g$ under choice of coordinates.
+	\end{remark}
+	For more properties of the Levi-Civita connection, see \cite{lee-riemann} Theorem 5.10. For more generalities on connections and covariant derivatives, see \cite{lee-riemann} chapters 4 and 5. We will only need the coordinate representation of the Levi-Civita connection using the Christoffel symbols for this paper.
+
 	
-	We now state and prove the first variation formula.  The proof involves a
-	coordinate computation on each subinterval and an integration by parts.
-	
-	\begin{theorem}[First variation of energy, \cite{spivak}]\label{thm:first-variation}
+	\begin{theorem}[First variation of energy]\label{thm:first-variation}
 		Let $(M,g)$ be a Riemannian manifold and
 		$\gamma\colon[a,b]\to M$ a piecewise $C^\infty$ curve with partition
 		$a=t_0<\dots<t_N=b$.  Let $\alpha$ be a variation of $\gamma$ with variation
@@ -90,15 +119,13 @@
 			&\quad - \sum_{i=0}^N
 			\ipg{V(t_i)}{\Delta_{t_i}\dot\gamma}.
 		\end{align*}
-		Here $\nabla$ is the Levi-Civita connection of $g$.
+		Here $\nabla$ is the Levi-Civita connection of $(M,g)$.
 	\end{theorem}
 	
 	\begin{proof}
-		We first express the energy in local coordinates and then differentiate.
-		
-		Choose a coordinate chart $(U,(x^1,\dots,x^n))$ such that
-		$\gamma([t_i,t_{i+1}])\subset U$.  We may refine the partition if necessary
-		to ensure this.  Write
+		We first express the energy in local coordinates and then differentiate. Choose a coordinate chart $(U,(x^1,\dots,x^n))$ such that
+		$\gamma([t_i,t_{i+1}])\subseteq U$.  We may refine the partition if necessary
+		to ensure full containment within $U$. Write
 		\[
 		\gamma(t) = \bigl(\gamma^1(t),\dots,\gamma^n(t)\bigr)
 		\]
@@ -123,13 +150,14 @@
 		= \frac12 \sum_{j,\ell=1}^n g_{j\ell}(x) y^j y^\ell,
 		\qquad x\in U,\ y\in\R^n.
 		\]
-		Then
+		Since we are working in coordinates, we can identify $T_{\gamma (t)} U \cong \mathbb{R} ^n$, yielding
 		\[
 		E_a^b(\gamma)
 		= \sum_{i=0}^{N-1}
 		\int_{t_i}^{t_{i+1}}
 		F\bigl(\gamma(t),\dot\gamma(t)\bigr)\,\dd t.
 		\]
+		The energy functional now resembles a standard form for which the calculus of variations is applicable.
 		
 		Now consider a variation $\alpha(u,t)$ with $\alpha(0,t)=\gamma(t)$.  In
 		coordinates, write
@@ -137,7 +165,7 @@
 		\alpha(u,t) = \bigl(\alpha^1(u,t),\dots,\alpha^n(u,t)\bigr).
 		\]
 		For each fixed $u$, we have a curve $t\mapsto\alpha(u,t)$, and we denote its
-		components by $\alpha^k(u,t)$.  The velocity is
+		components by $\alpha ^k(u,t)$.  The velocity is
 		\[
 		\frac{\partial\alpha}{\partial t}(u,t)
 		= \sum_{k=1}^n
