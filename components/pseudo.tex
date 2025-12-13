@@ -1,0 +1,22 @@
+\section{Pseduo-Riemannian manifolds}
+
+So far, we have restricted our attention only to Riemannian manifolds. However, many important applications of Riemannian geometry involve \emph{pseudo-Riemannian metrics}; for example the theory of General Relativity takes place on a pseudo-Riemannian manifold.
+
+\begin{definition}\label{dfn:8.1}
+	Let $V$ be a vector space. A symmetric 2-tensor $g : V\otimes V \to \mathbb{R} $ is \emph{nondegenerate} if for all nonzero $v\in V$, there exists $w\in V$ such that $g(v,w)\neq 0$. 
+\end{definition}
+
+Non-degenerate 2-tensors are a generalization of inner products in the following way. The matrix representation of the Euclidean inner product $\bar{g} $ is the identity matrix $\bar{g}_{ij} =\delta _{ij} $. Any inner product can be transformed into the Euclidean one by changing to an orthonormal basis such that the isomorphism to $\mathbb{R} ^n$ given by that basis preserves the inner product; existence of such a basis is easy to prove. Now instead of considering the identity matrix, consider the diagonal matrix whose entries are $\pm 1$. A nondegenerate symmetric 2-tensor can be transformed under some change of basis to such a diagonal matrix.
+
+The striking fact is that the number $r$ of $+1$s and $s$ of $-1$s in such a diagonal matrix representation of a nondegenerate form is \emph{invariant} under change of basis. Thus we refer to the pair $(r,s)$ as the \emph{signature} of a nondegenerate form.
+
+
+\begin{definition}\label{dfn:8.2}
+	A \emph{pseudo-Riemannian manifold} is a manifold $M$ together with a smooth 2-tensor field $g\in \mathcal{T} ^2(M)$ such that each $g_p$ is symmetric and nondegenerate, and such that the signature is the same everywhere on $M$.
+\end{definition}
+
+Much of the theory we have developed carries over to the situation for pseudo-Riemannian manifolds. Our derivation of the geodesic equation made reference very rarely to the inner product properties of the metric, and we only used symmetry and that $\left\langle -,0 \right\rangle =0$. Both follow by definition for a pseudo-Riemannian metric, and the latter for any bilinear map. Thus the geodesic equation follows for more general pseudo-Riemannian manifolds.
+
+However, not much more of the theory carries over. For example, $\left\| \dot{\gamma }(t)\right\| >0$ for all $t$ on Riemannian manifolds, but on pseudo-Riemannian manifolds we can have $\left\| \dot{\gamma }(t)  \right\| =0$, or even $\left\| \dot{\gamma } (t) \right\| <0$ everywhere. As such the arc-length reparameterization can fail. There are many more examples; for example the Hopf-Rinow theorem (see \cite{lee-riemann} Theorem 6.19), which has a number of useful corollaries.
+
+Even still, geodesics on pseudo-Riemannian manifolds are of extreme importance. As noted earlier, General Relativity, which is our current best theory of gravity, takes place on a pseudo-Riemannian manifold, and the equation of motion for a particle under the influence of gravity is precisely the geodesic equation. The metric can then be derived using Einstein's equation $G_{\mu \nu } =8\pi G_NT_{\mu \nu } $.

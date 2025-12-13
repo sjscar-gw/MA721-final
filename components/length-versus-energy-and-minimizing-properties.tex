@@ -4,12 +4,12 @@
 	We now relate the variational characterization of geodesics (via energy) to
 	the more geometric intuition of geodesics as locally length-minimizing curves.
 	
-	\subsection{Arc-length parametrization}
+	\subsection{Critical points of length vs.\ critical points of energy}
 	
 	Let $\gamma\colon[a,b]\to M$ be a smooth curve with $\dot\gamma(t)\ne 0$ for
 	all $t$.  Define its \emph{arc-length parameter} by
 	\[
-	s(t) = \int_a^t \norm{\dot\gamma(\tau)}_g \dd\tau.
+	s(t) = \int_a^t \norm{\dot\gamma(t)}_g \dd t.
 	\]
 	Then $s\colon[a,b]\to[0,L_g(\gamma)]$ is smooth and strictly increasing, hence
 	a diffeomorphism onto its image.  We can invert it to obtain $t(s)$ and define
@@ -22,9 +22,7 @@
 	\norm{\dot{\tilde\gamma}(s)}_g
 	= 1
 	\]
-	for all $s$.  In particular, $L_g(\tilde\gamma)=L_g(\gamma)$.
-	
-	\subsection{Critical points of length vs.\ critical points of energy}
+	for all $s$.  In particular, $L_g(\tilde\gamma)=L_g(\gamma)$. We will refer to this as he \emph{arc-length reparameterization} of $\gamma $.
 	
 	The length functional is less convenient to differentiate because of the
 	square root, but for unit-speed curves it is closely related to the energy.
@@ -99,15 +97,8 @@
 		by $\exp_p(v)=\gamma_v(1)$, where $\gamma_v$ is the unique geodesic with
 		$\gamma_v(0)=p$ and $\dot\gamma_v(0)=v$.  For sufficiently small $v$, the map
 		$\exp_p$ is a diffeomorphism onto a neighborhood $U$ of $p$.
+		This induces coordinates in which geodesics through $p$ correspond to straight lines in $T_pM$, and one can use this to show that the radial geodesic from $p$ to
+		$q$ is the unique minimizing curve in $U$.
 		
-		Geodesics through $p$ correspond to straight lines in $T_pM$ in these
-		coordinates, and one can use this to show that the radial geodesic from $p$ to
-		$q$ is the unique minimizing curve in $U$.  The full proof requires some
-		results from ODE theory and differential topology and is usually given in a
-		course in Riemannian geometry.  We will not reproduce all technical details
-		here, but the key point is that geodesics are indeed locally shortest paths.
+		The full proof is beyond the scope of this paper, so we refer the reader to \cite{lee-riemann} chapter 6, and in particular Proposition 6.11.
 	\end{proof}
-	
-	Our focus in this paper is on the variational derivation of the geodesic
-	equation rather than on these global existence and uniqueness results, so we
-	stop here.
