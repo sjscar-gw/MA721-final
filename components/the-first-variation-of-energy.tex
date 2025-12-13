@@ -92,11 +92,15 @@
 		\[
 			\Gamma _{ij} ^k=\frac{1}{2} \sum_{m=1}^ng^{km} \left( \frac{\partial g_{jm} }{\partial x^i} +\frac{\partial g_{im} }{\partial x^j} -\frac{\partial g_{ij} }{\partial x^m}  \right) 
 		.\]
-		Define the \emph{Levi-Civita connection} $\nabla : \mathfrak{X} (M)\times \mathfrak{X}(M) \to \mathfrak{X} (M)$ on $(M,g)$ as the bilinear map
+		Define the \emph{Levi-Civita connection} $\nabla : \mathfrak{X} (M)\times \mathfrak{X}(M) \to \mathfrak{X} (M)$ on $(M,g)$ as the map
 		\[
 			\nabla (\partial_{x^i} ,\partial_{x^j})=\sum_{k=1} ^n \Gamma_{ij} ^k \partial_{x^k}
+		\]
+		which is $C^\infty (M)$-linear (and thus $\mathbb{R} $-linear via constant functions) in the first argument and satisfies the following product rule in the second: for any smooth $f: M \to \mathbb{R} $,
+		\[
+			\nabla_X(fY)=f\nabla _XY+(Xf)Y
 		.\]
-		We generally write $\nabla(X,Y)$ as $\nabla _XY$.
+		We generally write $\nabla(X,Y)$ as $\nabla _XY$. We will often call $\nabla _XY$ the \emph{covariant derivative} of $Y$ in the direction of $X$.
 	\end{definition}
 	\begin{remark}
 		Given $p\in M$, we can evaluate the Christoffel symbols $\Gamma _{ij} ^k(p)$ at the point $p$ by taking a coordinate representation of $g$ in a chart around $p$, and then evaluating the partial dertivatives of $g_{ij} $ at $p$. Moreover, this representation is manifestly independent of the choice of coordinates by invariance of $g$ under choice of coordinates.
@@ -119,8 +123,6 @@
 	\end{theorem}
 	
 	\begin{proof}
-		We follow the proof sketch given by \cite{spivak}.
-
 		We first express the energy in local coordinates and then differentiate. Choose a coordinate chart $(U,(x^1,\dots,x^n))$ such that
 		$\gamma([t_i,t_{i+1}])\subseteq U$.  We may refine the partition if necessary
 		to ensure full containment within $U$. Write
