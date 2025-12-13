@@ -1,11 +1,11 @@
 	\section{Examples}
 	\label{sec:examples}
-	
+
 	We now compute geodesics explicitly in some important examples, illustrating
 	how the general theory plays out in practice.
-	
+
 	\subsection{Euclidean space \texorpdfstring{$\R^n$}{Rn}}
-	
+
 	Consider $M=\R^n$ with the standard Euclidean metric
 	\[
 	g = \sum_{i=1}^n \dd x^i\otimes\dd x^i.
@@ -16,7 +16,7 @@
 	\[
 	\Gamma^k_{ij} = 0 \quad\text{for all } i,j,k.
 	\]
-	
+
 	The geodesic equation therefore reduces to
 	\[
 	\frac{\dd^2\gamma^k}{\dd t^2}
@@ -33,13 +33,13 @@
 	for some constant vectors $A,B\in\R^n$.  These are precisely straight lines.
 	Thus our abstract definition of geodesics recovers the familiar fact that
 	geodesics in Euclidean space are straight lines with constant velocity.
-	
+
 	\subsection{The round two-sphere \texorpdfstring{$S^2$}{S2}}
-	
+
 	Let $M=S^2\subset\R^3$ be the unit sphere with the metric induced by the
 	Euclidean inner product.  To compute the geodesic equation, we introduce
 	spherical coordinates.
-	
+
 	Write a point on $S^2$ as
 	\[
 	(\cos\theta\cos\varphi,\ \cos\theta\sin\varphi,\ \sin\theta),
@@ -53,7 +53,7 @@
 	(If one uses colatitude instead of latitude, one gets
 	$g = \dd\theta^2 + \sin^2\theta\,\dd\varphi^2$; both descriptions are
 	equivalent up to a coordinate change.)
-	
+
 	For definiteness, let us take
 	\[
 	g_{\theta\theta}=1,\qquad
@@ -66,7 +66,7 @@
 	g^{\varphi\varphi}=\frac{1}{\sin^2\theta},\qquad
 	g^{\theta\varphi}=g^{\varphi\theta}=0.
 	\]
-	
+
 	Using the formula for Christoffel symbols, we compute the nonzero ones:
 	\begin{align*}
 		\Gamma^{\theta}_{\varphi\varphi}
@@ -88,25 +88,124 @@
 		= \cot\theta.
 	\end{align*}
 	All other $\Gamma^k_{ij}$ vanish.
-	
+
 	Therefore, a curve $\gamma(t)=(\theta(t),\varphi(t))$ on $S^2$ is a geodesic if
 	and only if it satisfies
-	\begin{align*}
+	\begin{align}
 		\frac{\dd^2\theta}{\dd t^2}
 		- \sin\theta\cos\theta
-		\left(\frac{\dd\varphi}{\dd t}\right)^2 &= 0,\\[0.5em]
+		\left(\frac{\dd\varphi}{\dd t}\right)^2 &= 0,\label{eq:1}\\[0.5em]
 		\frac{\dd^2\varphi}{\dd t^2}
-		+ 2\cot\theta\,\frac{\dd\theta}{\dd t}\,\frac{\dd\varphi}{\dd t} &= 0.
+		+ 2\cot\theta\,\frac{\dd\theta}{\dd t}\,\frac{\dd\varphi}{\dd t} &= 0.\label{eq:2}
+	\end{align}
+	Claim: The solution to this system of differential equations are great circles:
+
+	Proof: Let $S^2 = \{\mathbf{x}\in\mathbb{R}^3 : \|\mathbf{x}\|=1\}$ be the unit sphere. Consider a $C^2$-regular curve $\gamma:I\to S^2$, where $I\subset\mathbb{R}$ is an interval, parametrized in spherical coordinates:
+	\[
+		\gamma(t) = \big(\sin\theta(t)\cos\varphi(t),\ \sin\theta(t)\sin\varphi(t),\ \cos\theta(t)\big),
+	\]
+	with $\theta(t)\in(0,\pi)$, $\varphi(t)\in\mathbb{R}$ for all $t\in I$. We assume regularity: $(\dot{\theta}(t),\dot{\varphi}(t))\neq(0,0)$ for all $t$.
+
+	The spherical orthonormal frame is:
+	\begin{align*}
+		\mathbf{e}_r &= (\sin\theta\cos\varphi,\ \sin\theta\sin\varphi,\ \cos\theta), \\
+		\mathbf{e}_\theta &= (\cos\theta\cos\varphi,\ \cos\theta\sin\varphi,\ -\sin\theta), \\
+		\mathbf{e}_\varphi &= (-\sin\varphi,\ \cos\varphi,\ 0).
 	\end{align*}
-	
-	Solving this system explicitly is somewhat involved, but one can show that its
-	solutions are exactly the great circles on $S^2$.  For instance, if we fix a
-	unit vector $u\in\R^3$, then the intersection of $S^2$ with the plane through
-	the origin orthogonal to $u$ is a great circle.  Parameterizing this curve
-	with constant speed yields a solution of the geodesic equation.  Conversely,
-	one can prove that any geodesic on the round sphere extends uniquely to a
-	great circle.
-	
+	These satisfy $\mathbf{e}_r\times\mathbf{e}_\theta=\mathbf{e}_\varphi$, $\mathbf{e}_\theta\times\mathbf{e}_\varphi=\mathbf{e}_r$, $\mathbf{e}_\varphi\times\mathbf{e}_r=\mathbf{e}_\theta$, and $\|\mathbf{e}_r\|=\|\mathbf{e}_\theta\|=\|\mathbf{e}_\varphi\|=1$.
+
+
+	The velocity vector is:
+	\[
+		\mathbf{v}(t) = \dot{\gamma}(t) = \dot{\theta}\,\mathbf{e}_\theta + \sin\theta\,\dot{\varphi}\,\mathbf{e}_\varphi.
+	\]
+	Differentiating $\mathbf{v}$ with respect to $t$ (noting $\mathbf{e}_\theta,\mathbf{e}_\varphi$ depend on $t$ through $\theta,\varphi$), we obtain the acceleration:
+	\begin{align*}
+		\mathbf{a}(t) &= \frac{d}{dt}\Big(\dot{\theta}\,\mathbf{e}_\theta + \sin\theta\,\dot{\varphi}\,\mathbf{e}_\varphi\Big) \\
+		&= \ddot{\theta}\,\mathbf{e}_\theta + \dot{\theta}\,\dot{\mathbf{e}}_\theta + \frac{d}{dt}(\sin\theta\,\dot{\varphi})\,\mathbf{e}_\varphi + \sin\theta\,\dot{\varphi}\,\dot{\mathbf{e}}_\varphi.
+	\end{align*}
+	We compute the time derivatives of the frame vectors. First, the partial derivatives:
+	\begin{align*}
+		\frac{\partial\mathbf{e}_r}{\partial\theta} &= \mathbf{e}_\theta, &
+		\frac{\partial\mathbf{e}_r}{\partial\varphi} &= \sin\theta\,\mathbf{e}_\varphi, \\
+		\frac{\partial\mathbf{e}_\theta}{\partial\theta} &= -\mathbf{e}_r, &
+		\frac{\partial\mathbf{e}_\theta}{\partial\varphi} &= \cos\theta\,\mathbf{e}_\varphi, \\
+		\frac{\partial\mathbf{e}_\varphi}{\partial\theta} &= 0, &
+		\frac{\partial\mathbf{e}_\varphi}{\partial\varphi} &= -\sin\theta\,\mathbf{e}_r - \cos\theta\,\mathbf{e}_\theta.
+	\end{align*}
+	Thus, by the chain rule:
+	\begin{align*}
+		\dot{\mathbf{e}}_\theta &= \dot{\theta}\,\frac{\partial\mathbf{e}_\theta}{\partial\theta} + \dot{\varphi}\,\frac{\partial\mathbf{e}_\theta}{\partial\varphi}
+		= -\dot{\theta}\,\mathbf{e}_r + \dot{\varphi}\cos\theta\,\mathbf{e}_\varphi, \\
+		\dot{\mathbf{e}}_\varphi &= \dot{\theta}\,\frac{\partial\mathbf{e}_\varphi}{\partial\theta} + \dot{\varphi}\,\frac{\partial\mathbf{e}_\varphi}{\partial\varphi}
+		= \dot{\varphi}(-\sin\theta\,\mathbf{e}_r - \cos\theta\,\mathbf{e}_\theta).
+	\end{align*}
+	Substituting these into $\mathbf{a}(t)$ gives:
+	\begin{align*}
+		\mathbf{a}(t) &= \ddot{\theta}\,\mathbf{e}_\theta + \dot{\theta}\big(-\dot{\theta}\,\mathbf{e}_r + \dot{\varphi}\cos\theta\,\mathbf{e}_\varphi\big) \\
+		&\quad + \big(\cos\theta\,\dot{\theta}\dot{\varphi} + \sin\theta\,\ddot{\varphi}\big)\mathbf{e}_\varphi \\
+		&\quad + \sin\theta\,\dot{\varphi}\big(-\dot{\varphi}\sin\theta\,\mathbf{e}_r - \dot{\varphi}\cos\theta\,\mathbf{e}_\theta\big).
+	\end{align*}
+	Collecting components:
+	\begin{align*}
+		\mathbf{a}(t) &= \big(\ddot{\theta} - \sin\theta\cos\theta\,\dot{\varphi}^2\big)\mathbf{e}_\theta \\
+		&\quad + \big(\sin\theta\,\ddot{\varphi} + 2\cos\theta\,\dot{\theta}\dot{\varphi}\big)\mathbf{e}_\varphi \\
+		&\quad + \big(-\dot{\theta}^2 - \sin^2\theta\,\dot{\varphi}^2\big)\mathbf{e}_r. \label{eq:accel}
+	\end{align*}
+	Equations (\ref{eq:1}) and (\ref{eq:2}) are exactly the conditions that the coefficients of $\mathbf{e}_\theta$ and $\mathbf{e}_\varphi$ in (\ref{eq:accel}) vanish. Indeed, multiplying (\ref{eq:2}) by $\sin\theta$ yields:
+	\[
+		\sin\theta\,\ddot{\varphi} + 2\cos\theta\,\dot{\theta}\dot{\varphi} = 0.
+	\]
+	Thus, under the given system, $\mathbf{a}(t)$ is purely radial:
+	\[
+		\mathbf{a}(t) = -\big(\dot{\theta}^2 + \sin^2\theta\,\dot{\varphi}^2\big)\,\mathbf{e}_r = \lambda(t)\,\gamma(t),
+	\]
+	where $\lambda(t) = -\big(\dot{\theta}^2 + \sin^2\theta\,\dot{\varphi}^2\big)$ and we used $\gamma(t)=\mathbf{e}_r$.
+
+
+	Define the angular momentum per unit mass vector:
+	\[
+		\mathbf{L}(t) = \gamma(t) \times \mathbf{v}(t).
+	\]
+	Differentiating:
+	\begin{align*}
+		\frac{d\mathbf{L}}{dt} &= \dot{\gamma} \times \mathbf{v} + \gamma \times \mathbf{a} \\
+		&= \mathbf{v} \times \mathbf{v} + \gamma \times (\lambda\gamma) \\
+		&= 0 + \lambda\,(\gamma\times\gamma) = 0.
+	\end{align*}
+	Hence $\mathbf{L}$ is constant: $\mathbf{L}(t) \equiv \mathbf{L}_0 \in \mathbb{R}^3$.
+
+	Since $\mathbf{L}_0$ is constant, for all $t$:
+	\[
+		\gamma(t) \cdot \mathbf{L}_0 = \gamma(t) \cdot \big(\gamma(t)\times\mathbf{v}(t)\big) = 0,
+	\]
+	by the scalar triple product identity.
+    Thus $\gamma(I)$ lies in the plane $\Pi = \{\mathbf{x}\in\mathbb{R}^3 : \mathbf{x}\cdot\mathbf{L}_0 = 0\}$ through the origin.
+
+	We now consider two cases:
+
+	\textbf{Case 1:} $\mathbf{L}_0 \neq 0$.
+    Then $\Pi$ is a well-defined plane through the origin.
+    The intersection $\Pi \cap S^2$ is a great circle.
+    Since $\gamma(t)\in S^2$ for all $t$ and $\gamma(t)\in\Pi$, we have $\gamma(I) \subseteq \Pi \cap S^2$, i.e., the curve lies on a great circle.
+
+	\textbf{Case 2:} $\mathbf{L}_0 = 0$.
+    Then $\gamma(t) \parallel \mathbf{v}(t)$ for all $t$ (since $\gamma\times\mathbf{v}=0$). But $\gamma(t)$ is a unit vector, so differentiating $\gamma\cdot\gamma=1$ gives $\gamma\cdot\mathbf{v}=0$. Combined with $\gamma\times\mathbf{v}=0$, this implies $\mathbf{v}(t)=0$ for all $t$, contradicting regularity unless the curve is a single point. Hence, for a regular curve, $\mathbf{L}_0\neq0$.
+
+	Thus, every regular solution of the system lies on a great circle.
+
+	Conversely, Let $C$ be a great circle on $S^2$.
+    Then $C = \Pi\cap S^2$ for some plane $\Pi$ through the origin.
+	Choose any $C^2$ regular parametrization $\gamma(t)$ of $C$.
+    Since $C$ is a geodesic on $S^2$, its acceleration vector as a curve in $\mathbb{R}^3$ must be normal to the surface (Levi-Civita condition).
+    For $S^2$, the normal direction at $\gamma(t)$ is exactly $\pm\gamma(t)$.
+    Hence $\mathbf{a}(t) = \mu(t)\gamma(t)$ for some scalar function $\mu(t)$.
+    From the decomposition (\ref{eq:accel}), this implies the coefficients of $\mathbf{e}_\theta$ and $\mathbf{e}_\varphi$ vanish, yielding precisely (\ref{eq:1}) and (\ref{eq:2}).
+
+	Thus, any regular parametrization of a great circle satisfies the system.
+	Moreover, any solution of the system gives a great circle parametrization.
+    This establishes the equivalence.
+
 	\subsection{The punctured plane revisited}
 	
 	We return to the punctured plane
