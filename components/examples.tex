@@ -98,7 +98,7 @@
 		\frac{\dd^2\varphi}{\dd t^2}
 		+ 2\cot\theta\,\frac{\dd\theta}{\dd t}\,\frac{\dd\varphi}{\dd t} &= 0.\label{eq:2}
 	\end{align}
-	Claim: The solution to this system of differential equations are great circles:
+	\textbf{Claim 7.2.1}: The solution to this system of differential equations are great circles:
 
 	Proof: Let $S^2 = \{\mathbf{x}\in\mathbb{R}^3 : \|\mathbf{x}\|=1\}$ be the unit sphere. Consider a $C^2$-regular curve $\gamma:I\to S^2$, where $I\subset\mathbb{R}$ is an interval, parametrized in spherical coordinates:
 	\[
@@ -147,11 +147,11 @@
 		&\quad + \sin\theta\,\dot{\varphi}\big(-\dot{\varphi}\sin\theta\,\mathbf{e}_r - \dot{\varphi}\cos\theta\,\mathbf{e}_\theta\big).
 	\end{align*}
 	Collecting components:
-	\begin{align*}
-		\mathbf{a}(t) &= \big(\ddot{\theta} - \sin\theta\cos\theta\,\dot{\varphi}^2\big)\mathbf{e}_\theta \\
-		&\quad + \big(\sin\theta\,\ddot{\varphi} + 2\cos\theta\,\dot{\theta}\dot{\varphi}\big)\mathbf{e}_\varphi \\
-		&\quad + \big(-\dot{\theta}^2 - \sin^2\theta\,\dot{\varphi}^2\big)\mathbf{e}_r. \label{eq:accel}
-	\end{align*}
+	\begin{equation}
+		\mathbf{a}(t) &= \big(\ddot{\theta} - \sin\theta\cos\theta\,\dot{\varphi}^2\big)\mathbf{e}_\theta
+		+ \big(\sin\theta\,\ddot{\varphi} + 2\cos\theta\,\dot{\theta}\dot{\varphi}\big)\mathbf{e}_\varphi
+		+ \big(-\dot{\theta}^2 - \sin^2\theta\,\dot{\varphi}^2\big)\mathbf{e}_r. \label{eq:accel}
+	\end{equation}
 	Equations (\ref{eq:1}) and (\ref{eq:2}) are exactly the conditions that the coefficients of $\mathbf{e}_\theta$ and $\mathbf{e}_\varphi$ in (\ref{eq:accel}) vanish. Indeed, multiplying (\ref{eq:2}) by $\sin\theta$ yields:
 	\[
 		\sin\theta\,\ddot{\varphi} + 2\cos\theta\,\dot{\theta}\dot{\varphi} = 0.
